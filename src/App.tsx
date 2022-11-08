@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter } from 'react-router-dom'
+import Home from './components/home/index'
+import './App.css'
+import Login from './pages/login'
+import { useSelector } from 'react-redux'
+import { RootState } from './redux/store'
+import { ToastContainer } from "react-toastify";
 
-function App() {
+const App = () => {
+
+  const auth = useSelector((state: RootState) => state.user.auth)
+
+  const authRoutes = (
+    <Home />
+  )
+
+  const loginRoutes = (
+    <Login />
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <ToastContainer />
+      {
+        auth ? authRoutes : loginRoutes
+      }
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App

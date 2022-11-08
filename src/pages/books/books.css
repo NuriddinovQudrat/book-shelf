@@ -1,0 +1,85 @@
+.books-page {
+    width: 100%;
+}
+
+.books-page .top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.books-page .top button {
+    width: 250px;
+    background-color: #000000;
+    height: 36px;
+    border-radius: 4px;
+    color: #ffffff;
+    font-family: mon;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.books-page .book {
+    width: 100%;
+    height: 300px;
+    border-radius: 4px;
+    background-color: rgb(221, 185, 185);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.books-page .book h1 {
+    font-family: mon;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.books-page .book > div {
+    text-align: center;
+}
+
+.books-page .book p {
+    font-family: mon;
+    font-size: 18px;
+    margin: 0;
+}
+
+.books-page .book span {
+    font-family: mon;
+    font-size: 16px;
+}
+
+.books-page .book .wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    transition: 0.3s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.books-page .book:hover .wrapper {
+    visibility: visible;
+    opacity: 1;
+}
+
+.books-page .book .wrapper > div {
+    width: 24px;
+    height: 24px;
+    background-color: #000000;
+    color: #ffffff;
+    margin-left: 5px;
+    border-radius: 2px;
+    font-size: 14px;
+    cursor: pointer;
+}

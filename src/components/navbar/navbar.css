@@ -1,0 +1,84 @@
+.header-component {
+    width: 100%;
+    height: 60px;
+    background-color: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.header-component .logo {
+    width: 60px;
+}
+
+.header-component .user-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+}
+
+.header-component .user-wrapper .bg {
+    width: 32px;
+    height: 32px;
+    background-image: url('../../assets//images/user.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+}
+
+.header-component .user-wrapper h5 {
+    font-family: mon;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 5px;
+}
+
+.header-component .user-wrapper .icon {
+    font-size: 20px;
+    margin: 0;
+}
+
+.header-component .user-wrapper .icon.icon-false {
+    transform: rotate(180deg);
+}
+
+.header-component .user-wrapper .menu {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.header-component .user-wrapper .menu a {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.header-component .user-wrapper .menu.menu-false {
+    display: none;
+}
+
+.header-component .user-wrapper .menu h6 {
+    margin: 0;
+    font-size: 14px;
+    font-family: mon;
+    font-weight: 600;
+    padding: 5px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.header-component .user-wrapper .menu h6:hover {
+    background-color: #00000010;
+}

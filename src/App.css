@@ -1,38 +1,83 @@
-.App {
-  text-align: center;
+body {
+    margin: 0;
+    background-color: #e5e5e5 !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+    font-family: mon;
+    src: url('./assets/fonts/RobotoCondensed-Regular.ttf');
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.antd-modals {
+    width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.antd-modals .label-input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.antd-modals .label-input label {
+    font-family: mon;
+    font-size: 14px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.antd-modals .label-input input {
+    width: 100%;
+    height: 36px;
+    border: 1px solid #00000060;
+    border-radius: 4px;
+    font-family: mon;
+    font-size: 16px;
+    outline: none;
+    padding: 5px;
+}
+
+.antd-modals .add-btn {
+    width: 100%;
+    height: 36px;
+    background-color: #000000;
+    border-radius: 4px;
+    color: #ffffff;
+    font-family: mon;
+    font-size: 16px;
+}
+
+.antd-modals .bg {
+    width: 100%;
+    height: 200px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: 1px solid #00000060;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.antd-modals .bg .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 96px;
+    opacity: 0.5;
+    z-index: 0;
+    cursor: pointer;
+}
+
+.antd-modals .bg .icon.icon-none {
+    opacity: 0;
+}
+
+.antd-modals .bg input {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 4;
+    opacity: 0;
 }
