@@ -1,4 +1,4 @@
-import { USER_LOGIN } from "../types/types"
+import { USER_LOGIN, USER_LOGOUT } from "../types/types"
 
 const isData = window.localStorage.getItem('auth')
 const authData = isData ? JSON.parse(window.localStorage.getItem('auth') || '') : null
@@ -13,6 +13,11 @@ const loginReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 auth: action.payload
+            }
+        case USER_LOGOUT:
+            return {
+                ...state,
+                auth: false
             }
         default:
             return state
