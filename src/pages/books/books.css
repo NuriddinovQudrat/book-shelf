@@ -44,7 +44,7 @@
 }
 
 .books-page .book > div {
-    text-align: center;
+    text-align: left;
 }
 
 .books-page .book p {
@@ -54,8 +54,23 @@
 }
 
 .books-page .book span {
+    width: 100%;
+    display: block;
     font-family: mon;
     font-size: 16px;
+    border-top: 1px solid #00000020;
+}
+
+.books-page .book .edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.books-page .book .delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .books-page .book .wrapper {

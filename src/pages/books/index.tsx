@@ -13,29 +13,32 @@ import Loader from '../../components/loader/Loader'
 
 const Books = () => {
     
-    const { key, secret, id } = useSelector((state: RootState) => state.user.auth)
+    const { key, secret } = useSelector((state: RootState) => state.user.auth)
 
-    const fileRef = useRef<HTMLInputElement>(null)
+    // const fileRef = useRef<HTMLInputElement>(null)
 
+    const [ bookId, setBookId ] = useState('')
+    const [ status, setStatus ] = useState('')
     const [ isModalOpen, setIsModalOpen ] = useState(false)
+    const [ isModalOpen1, setIsModalOpen1 ] = useState(false)
     const [ createLoading, setCreateLoading ] = useState(true)
     const [ createLoading1, setCreateLoading1 ] = useState(true)
     const [ isbn, setIsbn ] = useState('')
-    const [ title, setTitle ] = useState('')
     const [ searchTitle, setSearchTitle ] = useState('')
-    const [ author, setAuthor ] = useState('')
-    const [ published, setPublished ] = useState('')
-    const [ pages, setPages ] = useState('')
     const [ allBooks, setAllBooks ] = useState([])
-    const [ imageFileUrl, setImageFileUrl ] = useState<string>("")
+    // const [ title, setTitle ] = useState('')
+    // const [ author, setAuthor ] = useState('')
+    // const [ published, setPublished ] = useState('')
+    // const [ pages, setPages ] = useState('')
+    // const [ imageFileUrl, setImageFileUrl ] = useState<string>("")
 
     const loading = createLoading ? <Loader /> : null
 
-    const getUrl = () => {
-        if(fileRef.current?.files?.length) {
-            setImageFileUrl(URL.createObjectURL(fileRef.current.files[0]))
-        }
-    }
+    // const getUrl = () => {
+    //     if(fileRef.current?.files?.length) {
+    //         setImageFileUrl(URL.createObjectURL(fileRef.current.files[0]))
+    //     }
+    // }
     
     const getAllBooks = () => {
         axios.get('https://no23v104.herokuapp.com/books', {
@@ -53,14 +56,17 @@ const Books = () => {
     const addBook = (e: any) => {
         e.preventDefault()
         setCreateLoading1(false)
+        // const book = {
+        //     id,
+        //     isbn,
+        //     title,
+        //     author,
+        //     published: Number(published),
+        //     pages: Number(pages),
+        //     cover: fileRef.current?.files ? fileRef.current?.files[0] : fileRef.current?.files
+        // }
         const book = {
-            id,
-            isbn,
-            title,
-            author,
-            published: Number(published),
-            pages: Number(pages),
-            cover: fileRef.current?.files ? fileRef.current?.files[0] : fileRef.current?.files
+            isbn
         }
         const signKeyString = `POSThttps://no23v104.herokuapp.com/books${JSON.stringify(book)}${secret}`
         axios.post('https://no23v104.herokuapp.com/books', book, {
@@ -73,15 +79,15 @@ const Books = () => {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
             setIsModalOpen(false)
-            setImageFileUrl("")
             setIsbn("")
-            setTitle('')
-            setAuthor('')
-            setPublished('')
-            setPages('')
             getAllBooks()
+            // setImageFileUrl("")
+            // setTitle('')
+            // setAuthor('')
+            // setPublished('')
+            // setPages('')
         }).catch(err => {
-            toast.error("Error", {
+            toast.error(err.response.data.message, {
                 position: toast.POSITION.BOTTOM_RIGHT
             })
         }).finally(() => setCreateLoading1(true))
@@ -122,6 +128,31 @@ const Books = () => {
         }
     }
 
+    const editBook = (e: any) => {
+        e.preventDefault()
+        const body = {
+            status: Number(status)
+        }
+        const signKeyString = `PATCHhttps://no23v104.herokuapp.com/books/${bookId}${JSON.stringify(body)}${secret}`
+
+        axios.patch(`https://no23v104.herokuapp.com/books/${bookId}`, body, {
+            headers: {
+                "Key": key,
+                "Sign": md5(signKeyString)
+            }  
+        }).then(res => {
+            toast.success("Changed", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+            setIsModalOpen1(false)
+            getAllBooks()
+            setStatus('')
+        }).catch(err => {
+            console.log(err)
+        })
+        console.log(body)
+    }
+
     useEffect(() => {
         getAllBooks()
     }, [])
@@ -142,13 +173,9 @@ const Books = () => {
                 closeIcon={null}
             >
                 <form encType='multipart/form-data' onSubmit={addBook}>
-                    <div className='bg' style={{backgroundImage: `url(${imageFileUrl})`}}>
+                    {/* <div className='bg' style={{backgroundImage: `url(${imageFileUrl})`}}>
                         <GrAdd className={fileRef.current !== null ? 'icon icon-none' : 'icon'} />
                         <input type='file' ref={fileRef} required onChange={() => getUrl()} />
-                    </div>
-                    <div className='label-input'>
-                        <label>ISBN</label>
-                        <input type='number' placeholder='ISBN' required value={isbn} onChange={(e) => setIsbn(e.target.value)} />
                     </div>
                     <div className='label-input'>
                         <label>Title</label>
@@ -165,8 +192,31 @@ const Books = () => {
                     <div className='label-input'>
                         <label>Pages</label>
                         <input type='number' placeholder='' required value={pages} onChange={(e) => setPages(e.target.value)} />
+                    </div> */}
+                    
+                    <div className='label-input'>
+                        <label>ISBN</label>
+                        <input type='number' placeholder='ISBN' required value={isbn} onChange={(e) => setIsbn(e.target.value)} />
                     </div>
                     <button className={!createLoading ? 'add-btn' : 'add-btn add-btn-false'} disabled={!createLoading1}>Add book</button>
+                </form>
+            </Modal>
+
+            <Modal 
+                title={null} 
+                open={isModalOpen1} 
+                onOk={() => setIsModalOpen1(false)} 
+                onCancel={() => setIsModalOpen1(false)}
+                footer={null}
+                className='antd-modals'
+                closeIcon={null}
+            >
+                <form encType='multipart/form-data' onSubmit={editBook}>
+                    <div className='label-input'>
+                        <label>Status</label>
+                        <input type='number' placeholder='' required value={status} onChange={(e) => setStatus(e.target.value)} />
+                    </div>
+                    <button className='add-btn'>Change status</button>
                 </form>
             </Modal>
 
@@ -180,16 +230,19 @@ const Books = () => {
             <Row>
                 {
                     allBooks?.map((item: any, index) => {
+                        console.log(item)
                         return (
                             <Col lg={3} md={4} key={index}>
                                 <div className='book'>
-                                    <h1>{item.book.title ? item.book.title : 'Title'}</h1>
+                                    <h1>Title: {item?.book.title}</h1>
                                     <div>
-                                        <p>{item?.book.author}</p>
-                                        <span>{item?.book.published}</span>
+                                        <p>Author: {item?.book.author}</p>
+                                        <span>Published: {item?.book.published}</span>
+                                        <span>Pages: {item?.book.pages}</span>
+                                        <span>Status: {item?.status}</span>
                                     </div>
                                     <div className='wrapper'>
-                                        <div className='edit'>
+                                        <div className='edit' onClick={() => {setIsModalOpen1(true); setBookId(item?.book.id)}}>
                                             <MdEdit className='icon' />
                                         </div>
                                         <div className='delete' onClick={() => deleteBook(item?.book.id)}>
